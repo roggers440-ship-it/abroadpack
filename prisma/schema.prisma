@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  products  Product[]
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  name        String
+  slug        String    @unique
+  description String?
+  contents    String?   // "6 plates, 6 spoons, 6 glasses"
+  note        String?
+  imageUrl    String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  variants    Variant[]
+
+  @@index([categoryId])
+}
+
+model Variant {
+  id           String      @id @default(cuid())
+  productId    String
+  product      Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  brandName    String
+  tier         VariantTier
+  pricePaisa   Int
+  weightGrams  Int
+  imageUrl     String?
+  availability String      @default("Available")
+  tags         String[]    @default([])
+  isActive     Boolean     @default(true)
+  orderLines   OrderLine[]
+
+  @@index([productId])
+}
+
+enum VariantTier {
+  PREMIUM
+  VALUE
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  fullName  String
+  email     String?
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  code         String      @unique // "AP-4821" — what they show at pickup
+  customerId   String
+  customer     Customer    @relation(fields: [customerId], references: [id])
+  status       OrderStatus @default(DRAFT)
+
+  // snapshot at order time
+  estTotalPaisa   Int
+  estWeightGrams  Int
+
+  depositPaisa    Int      @default(0)
+  depositRef      String?  // eSewa/Fonepay txn id
+
+  // filled at settlement
+  finalTotalPaisa Int?
+  balancePaisa    Int?
+  settledAt       DateTime?
+
+  destination  String?  // "Germany"
+  flightDate   DateTime?
+  notes        String?
+
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  lines        OrderLine[]
+
+  @@index([customerId])
+  @@index([status])
+}
+
+enum OrderStatus {
+  DRAFT
+  DEPOSIT_PAID
+  SOURCING
+  READY_FOR_PICKUP
+  SETTLED
+  CANCELLED
+}
+
+model OrderLine {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   Variant @relation(fields: [variantId], references: [id])
+
+  // frozen copies — product prices change, orders must not
+  productName String
+  brandName   String
+  pricePaisa  Int
+  weightGrams Int
+
+  qtyOrdered  Int @default(1)
+  qtyAccepted Int?  // null until pickup; 0 = rejected
+
+  @@index([orderId])
+  @@index([variantId])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  fullName  String
+  phone     String
+  email     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([isRead, createdAt])
+}
