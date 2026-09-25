@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FAQS } from "@/lib/faqs";
 import {
   Container,
   Typography,
@@ -25,29 +26,6 @@ import {
   LocationOn,
 } from "@mui/icons-material";
 import ContactForm from "./ContactForm";
-
-const FAQS = [
-  {
-    q: "What if I reject everything at pickup?",
-    a: "Your NPR 1,000 deposit is refunded in full. You are never obliged to buy anything you haven't seen and approved in person.",
-  },
-  {
-    q: "Why not just buy from Asan myself?",
-    a: "You can. We save you the days of running between markets, and we tell you what each item weighs — which is the part that catches most students out at the airport.",
-  },
-  {
-    q: "Can I add or remove items after ordering?",
-    a: "Yes. Removing is easy at pickup. For additions, call us before we start sourcing and we'll update the list.",
-  },
-  {
-    q: "What about food and medicine at customs?",
-    a: "The EU bans meat and dairy from Nepal — these are seized at the border. We only sell dry spices, lentils and dried vegetables for EU destinations. Medicines should travel in original packaging with a prescription copy.",
-  },
-  {
-    q: "How long does sourcing take?",
-    a: "Usually 3–5 working days. If something takes longer we call you before you travel to the office.",
-  },
-];
 
 // TODO: REPLACE WITH REAL CUSTOMERS BEFORE LAUNCH — placeholder text for UI testing only
 const TESTIMONIALS = [
@@ -100,6 +78,7 @@ export default function HomePage() {
               }}
             />
             <Typography
+              component="h1"
               sx={{
                 fontWeight: 700,
                 letterSpacing: "-0.03em",
@@ -114,6 +93,7 @@ export default function HomePage() {
               </Box>
             </Typography>
             <Typography
+              component="h2"
               sx={{
                 fontSize: { xs: 17, md: 18 },
                 color: muted,
@@ -1045,12 +1025,16 @@ function StepCard({
             {n}
           </Box>
           <Typography
+            component="h3"
             sx={{ fontWeight: 700, fontSize: 19, letterSpacing: "-0.01em" }}
           >
             {title}
           </Typography>
         </Stack>
-        <Typography sx={{ color: muted, lineHeight: 1.65, fontSize: 15 }}>
+        <Typography
+          component="h3"
+          sx={{ color: muted, lineHeight: 1.65, fontSize: 15 }}
+        >
           {body}
         </Typography>
       </Stack>

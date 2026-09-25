@@ -16,6 +16,10 @@ import { npr, kg } from "@/lib/money";
 import SaveOrderCode from "@/components/SaveOrderCode";
 import CopyCode from "@/components/CopyCode";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 const LABEL: Record<string, string> = {
   DRAFT: "Awaiting deposit",
   DEPOSIT_PAID: "Confirmed",

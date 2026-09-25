@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import { paymentFields, ESEWA_URL } from "@/lib/esewa";
 import AutoSubmit from "@/components/AutoSubmit";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function PayPage({
   params,
 }: {

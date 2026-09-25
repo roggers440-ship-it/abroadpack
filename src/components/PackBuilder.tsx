@@ -122,6 +122,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
       <Container maxWidth="md" sx={{ py: { xs: 0, md: 3 } }}>
         <Stack spacing={1} sx={{ mb: 4, display: { xs: "none", md: "block" } }}>
           <Typography
+            component="h1"
             sx={{
               fontWeight: 700,
               fontSize: { xs: 24, sm: 28, md: 34 },
@@ -132,6 +133,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
             Everything you need for Abroad Study
           </Typography>
           <Typography
+            component="h2"
             color="text.secondary"
             sx={{
               fontWeight: 400,
@@ -157,6 +159,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
           }}
         >
           <Typography
+            component="h2"
             sx={{
               fontWeight: 600,
               fontSize: { xs: 16, md: 18 },
@@ -235,6 +238,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
               >
                 {/* index */}
                 <Typography
+                  component="h2"
                   sx={{
                     fontSize: 13,
                     fontWeight: 700,
@@ -248,6 +252,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
 
                 <Box sx={{ flexGrow: 1, minWidth: 0 }}>
                   <Typography
+                    component="h2"
                     sx={{
                       fontWeight: 700,
                       fontSize: 17,
@@ -329,10 +334,14 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                                 }}
                               >
                                 <Box>
-                                  <Typography sx={{ fontWeight: 600 }}>
+                                  <Typography
+                                    component="h2"
+                                    sx={{ fontWeight: 600 }}
+                                  >
                                     {p.name}
                                   </Typography>
                                   <Typography
+                                    component="h2"
                                     variant="body2"
                                     color="text.secondary"
                                   >
@@ -350,6 +359,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                               </Stack>
                               {!sel && p.description && (
                                 <Typography
+                                  component="h2"
                                   variant="body2"
                                   color="text.secondary"
                                   sx={{ mt: 0.5 }}
@@ -407,7 +417,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                                             p.imageUrl ||
                                             PLACEHOLDER
                                           }
-                                          alt={v.brandName}
+                                          alt={`${p.name} — ${v.brandName}`}
                                           sx={{
                                             width: 56,
                                             height: 56,
@@ -419,12 +429,16 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                                         />
                                         <Box sx={{ minWidth: 0 }}>
                                           <Typography
+                                            component="h2"
                                             variant="body2"
                                             sx={{ fontWeight: 600 }}
                                           >
                                             {v.brandName}
                                           </Typography>
-                                          <Typography variant="body2">
+                                          <Typography
+                                            component="h2"
+                                            variant="body2"
+                                          >
                                             {npr(v.pricePaisa)}
                                             <Box
                                               component="span"
@@ -499,6 +513,7 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                                     <RemoveIcon fontSize="small" />
                                   </IconButton>
                                   <Typography
+                                    component="h3"
                                     sx={{ minWidth: 24, textAlign: "center" }}
                                   >
                                     {sel.qty}
@@ -511,10 +526,14 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
                                     <AddIcon fontSize="small" />
                                   </IconButton>
                                 </Stack>
-                                <Typography sx={{ fontWeight: 600 }}>
+                                <Typography
+                                  component="h3"
+                                  sx={{ fontWeight: 600 }}
+                                >
                                   {npr((selVariant?.pricePaisa ?? 0) * sel.qty)}
                                 </Typography>
                                 <Typography
+                                  component="h3"
                                   variant="body2"
                                   color="text.secondary"
                                 >
@@ -554,7 +573,9 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
         <Container maxWidth="md" sx={{ py: 2 }}>
           <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h6">{npr(totals.paisa)}</Typography>
+              <Typography component="h6" variant="h6">
+                {npr(totals.paisa)}
+              </Typography>
               <Typography
                 variant="body2"
                 color={over ? "error.main" : "text.secondary"}
