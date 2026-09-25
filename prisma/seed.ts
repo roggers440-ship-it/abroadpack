@@ -13,54 +13,126 @@ const data = [
     slug: "kitchen",
     products: [
       {
-        name: "Pressure Cooker 3L",
-        slug: "pressure-cooker-3l",
-        description: "Enough for daily dal-bhat for 2–3 people. Fits in a suitcase corner.",
+        name: "Pressure Cooker 2L",
+        slug: "pressure-cooker-2l",
+        description: "Right size for cooking for one. Bigger cookers waste gas and space.",
         imageUrl: img("Cooker"),
         variants: [
-          { brandName: "Prestige 3L Stainless Steel", tier: "PREMIUM", pricePaisa: 520000, weightGrams: 2600, imageUrl: img("Prestige Cooker") },
-          { brandName: "Hawkins 3L Aluminium", tier: "VALUE", pricePaisa: 340000, weightGrams: 1900, imageUrl: img("Hawkins Cooker") },
+          { brandName: "Prestige 2L Stainless Steel", tier: "PREMIUM", pricePaisa: 450000, weightGrams: 2200, imageUrl: img("Prestige Cooker") },
+          { brandName: "Hawkins 2L Aluminium", tier: "VALUE", pricePaisa: 290000, weightGrams: 1600, imageUrl: img("Hawkins Cooker") },
+        ],
+      },
+      {
+        name: "Kadai",
+        slug: "kadai",
+        description: "For curry, vegetables, anything that needs depth.",
+        imageUrl: img("Kadai"),
+        variants: [
+          { brandName: "Prestige Non-Stick", tier: "PREMIUM", pricePaisa: 280000, weightGrams: 1100, imageUrl: img("Prestige Kadai") },
+          { brandName: "Local Export", tier: "VALUE", pricePaisa: 140000, weightGrams: 1200, imageUrl: img("Local Kadai") },
         ],
       },
       {
         name: "Frying Pan 24cm",
         slug: "frying-pan-24",
-        description: "One good pan handles most cooking. 24cm fits a standard hostel stove.",
+        description: "Eggs, roti, anything flat. 24cm fits a standard hostel stove.",
         imageUrl: img("Pan"),
         variants: [
-          { brandName: "Prestige Tri-Ply Stainless Steel", tier: "PREMIUM", pricePaisa: 380000, weightGrams: 1200, imageUrl: img("Tri-Ply Pan") },
+          { brandName: "Prestige Tri-Ply", tier: "PREMIUM", pricePaisa: 380000, weightGrams: 1200, imageUrl: img("Tri-Ply Pan") },
           { brandName: "Hawkins Futura Non-Stick", tier: "VALUE", pricePaisa: 220000, weightGrams: 900, imageUrl: img("Futura Pan") },
         ],
       },
       {
-        name: "Spice Box (Masala Dani)",
-        slug: "spice-box",
-        description: "Keeps your daily masalas organised instead of loose in packets.",
-        imageUrl: img("Masala Dani"),
+        name: "Plates (set of 2)",
+        slug: "plates",
+        description: "Steel plates survive the flight. Ceramic does not.",
+        imageUrl: img("Plates"),
         variants: [
-          { brandName: "Stainless Steel 7-Compartment", tier: "PREMIUM", pricePaisa: 95000, weightGrams: 700, imageUrl: img("Steel Spice Box") },
-          { brandName: "Compact Acrylic Organizer", tier: "VALUE", pricePaisa: 45000, weightGrams: 350, imageUrl: img("Acrylic Spice Box") },
+          { brandName: "Heavy Steel", tier: "PREMIUM", pricePaisa: 90000, weightGrams: 700, imageUrl: img("Steel Plates") },
+          { brandName: "Standard Steel", tier: "VALUE", pricePaisa: 45000, weightGrams: 600, imageUrl: img("Standard Plates") },
         ],
       },
       {
-        name: "Rolling Pin & Board (Belna Chakla)",
-        slug: "belna-chakla",
-        description: "For roti and paratha. Marble is heavier but lasts forever.",
-        imageUrl: img("Belna Chakla"),
+        name: "Bowls (set of 2)",
+        slug: "bowls",
+        description: "For dal, soup, cereal. You'll use these daily.",
+        imageUrl: img("Bowls"),
         variants: [
-          { brandName: "Heavy Duty Marble Chakla Set", tier: "PREMIUM", pricePaisa: 140000, weightGrams: 2400, imageUrl: img("Marble Chakla") },
-          { brandName: "Traditional Teak Wood Set", tier: "VALUE", pricePaisa: 70000, weightGrams: 900, imageUrl: img("Wood Belna") },
+          { brandName: "Heavy Steel", tier: "PREMIUM", pricePaisa: 65000, weightGrams: 450, imageUrl: img("Steel Bowls") },
+          { brandName: "Standard Steel", tier: "VALUE", pricePaisa: 32000, weightGrams: 400, imageUrl: img("Standard Bowls") },
         ],
       },
       {
-        name: "Utensil Starter Kit (1 set)",
-        slug: "utensil-starter-kit",
-        description: "Everything you need to cook and eat from day one.",
-        contents: "Plates, bowls, glasses, spoons, forks, ladle, spatula, knife",
-        imageUrl: img("Utensil Set"),
+        name: "Glasses (set of 2)",
+        slug: "glasses",
+        description: "Steel, not glass — glass breaks in checked luggage.",
+        imageUrl: img("Glasses"),
         variants: [
-          { brandName: "Premium Heavy-Duty Cutlery Set", tier: "PREMIUM", pricePaisa: 420000, weightGrams: 3400, imageUrl: img("Premium Utensils") },
-          { brandName: "Standard 12-Piece Steel Set", tier: "VALUE", pricePaisa: 210000, weightGrams: 2900, imageUrl: img("Standard Utensils") },
+          { brandName: "Heavy Steel", tier: "PREMIUM", pricePaisa: 50000, weightGrams: 350, imageUrl: img("Steel Glasses") },
+          { brandName: "Standard Steel", tier: "VALUE", pricePaisa: 25000, weightGrams: 300, imageUrl: img("Standard Glasses") },
+        ],
+      },
+      {
+        name: "Coffee Cups (set of 2)",
+        slug: "coffee-cups",
+        description: "Steel or melamine. Skip ceramic.",
+        imageUrl: img("Cups"),
+        variants: [
+          { brandName: "Insulated Steel", tier: "PREMIUM", pricePaisa: 70000, weightGrams: 400, imageUrl: img("Insulated Cups") },
+          { brandName: "Standard Steel", tier: "VALUE", pricePaisa: 35000, weightGrams: 300, imageUrl: img("Standard Cups") },
+        ],
+      },
+      {
+        name: "Cutlery (spoons & forks)",
+        slug: "cutlery",
+        description: "Dinner spoons and forks. Two of each is enough for one person.",
+        contents: "2 dinner spoons, 2 dinner forks, 2 tea spoons",
+        imageUrl: img("Cutlery"),
+        variants: [
+          { brandName: "Heavy Steel", tier: "PREMIUM", pricePaisa: 60000, weightGrams: 350, imageUrl: img("Heavy Cutlery") },
+          { brandName: "Standard Steel", tier: "VALUE", pricePaisa: 30000, weightGrams: 300, imageUrl: img("Standard Cutlery") },
+        ],
+      },
+      {
+        name: "Rice Ladle",
+        slug: "rice-ladle",
+        description: "Flat serving spoon for rice.",
+        imageUrl: img("Rice Ladle"),
+        variants: [
+          { brandName: "Steel", tier: "PREMIUM", pricePaisa: 25000, weightGrams: 150, imageUrl: img("Steel Rice Ladle") },
+          { brandName: "Local", tier: "VALUE", pricePaisa: 12000, weightGrams: 140, imageUrl: img("Local Rice Ladle") },
+        ],
+      },
+      {
+        name: "Soup Ladle",
+        slug: "soup-ladle",
+        description: "Deep ladle for dal and soup.",
+        imageUrl: img("Soup Ladle"),
+        variants: [
+          { brandName: "Steel", tier: "PREMIUM", pricePaisa: 28000, weightGrams: 180, imageUrl: img("Steel Soup Ladle") },
+          { brandName: "Local", tier: "VALUE", pricePaisa: 14000, weightGrams: 170, imageUrl: img("Local Soup Ladle") },
+        ],
+      },
+      {
+        name: "Kitchen Knife",
+        slug: "kitchen-knife",
+        note: "Checked luggage only — never in your cabin bag.",
+        description: "One good knife does everything. Chopping board is easy to buy there.",
+        imageUrl: img("Knife"),
+        variants: [
+          { brandName: "Stainless Chef Knife", tier: "PREMIUM", pricePaisa: 65000, weightGrams: 200, imageUrl: img("Chef Knife") },
+          { brandName: "Standard Knife", tier: "VALUE", pricePaisa: 28000, weightGrams: 180, imageUrl: img("Standard Knife") },
+        ],
+      },
+      {
+        name: "Potato Peeler",
+        slug: "peeler",
+        note: "Checked luggage only.",
+        description: "Small, cheap, and annoying to be without.",
+        imageUrl: img("Peeler"),
+        variants: [
+          { brandName: "Steel Peeler", tier: "PREMIUM", pricePaisa: 18000, weightGrams: 80, imageUrl: img("Steel Peeler") },
+          { brandName: "Local Peeler", tier: "VALUE", pricePaisa: 8000, weightGrams: 70, imageUrl: img("Local Peeler") },
         ],
       },
     ],
@@ -383,6 +455,60 @@ async function main() {
             },
           })),
         },
+      },
+    });
+  }
+  // ── presets ──────────────────────────────
+  await prisma.presetItem.deleteMany();
+  await prisma.preset.deleteMany();
+
+  const KITCHEN_SLUGS = [
+    "pressure-cooker-2l", "kadai", "frying-pan-24", "plates", "bowls",
+    "glasses", "coffee-cups", "cutlery", "rice-ladle", "soup-ladle",
+    "kitchen-knife", "peeler",
+  ];
+
+  const PRESETS = [
+    {
+      name: "Kitchen Complete Set",
+      slug: "kitchen-complete",
+      description:
+        "Everything you need to cook and eat from day one. Twelve items, export quality — the practical choice.",
+      tier: "VALUE" as const,
+      slugs: KITCHEN_SLUGS,
+    },
+    {
+      name: "Kitchen Complete Set — Premium",
+      slug: "kitchen-complete-premium",
+      description:
+        "The same twelve items in branded, heavier-grade versions. Lasts longer, costs more.",
+      tier: "PREMIUM" as const,
+      slugs: KITCHEN_SLUGS,
+    },
+  ];
+
+  for (const [pi, p] of PRESETS.entries()) {
+    const products = await prisma.product.findMany({
+      where: { slug: { in: p.slugs } },
+      include: { variants: true },
+    });
+
+    const items = p.slugs
+      .map((slug, idx) => {
+        const product = products.find((x) => x.slug === slug);
+        const variant =
+          product?.variants.find((v) => v.tier === p.tier) ?? product?.variants[0];
+        return variant ? { variantId: variant.id, qty: 1, sortOrder: idx } : null;
+      })
+      .filter((x): x is { variantId: string; qty: number; sortOrder: number } => !!x);
+
+    await prisma.preset.create({
+      data: {
+        name: p.name,
+        slug: p.slug,
+        description: p.description,
+        sortOrder: pi,
+        items: { create: items },
       },
     });
   }

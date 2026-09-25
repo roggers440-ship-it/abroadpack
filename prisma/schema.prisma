@@ -46,6 +46,7 @@ model Variant {
   tags         String[]    @default([])
   isActive     Boolean     @default(true)
   orderLines   OrderLine[]
+  presetItems  PresetItem[]
 
   @@index([productId])
 }
@@ -135,4 +136,28 @@ model ContactMessage {
   createdAt DateTime @default(now())
 
   @@index([isRead, createdAt])
+}
+
+model Preset {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  description String?
+  imageUrl    String?
+  sortOrder   Int            @default(0)
+  isActive    Boolean        @default(true)
+  items       PresetItem[]
+}
+
+model PresetItem {
+  id        String  @id @default(cuid())
+  presetId  String
+  preset    Preset  @relation(fields: [presetId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  qty       Int     @default(1)
+  sortOrder Int     @default(0)
+
+  @@unique([presetId, variantId])
+  @@index([presetId])
 }

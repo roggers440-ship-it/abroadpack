@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { Catalog, Presets } from "@/lib/catalog";
 import {
   Container,
   Typography,
@@ -27,10 +28,9 @@ import {
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import type { Catalog } from "@/lib/catalog";
 import { npr, kg } from "@/lib/money";
 import CheckoutDialog from "./CheckoutDialog";
-import { Check, Close } from "@mui/icons-material";
+import { Check, Close, Add } from "@mui/icons-material";
 
 const LIMITS = [
   { label: "23 kg (1 bag)", grams: 23000 },
@@ -45,7 +45,13 @@ type Pick = { variantId: string; qty: number };
 
 const PLACEHOLDER = "https://placehold.co/200x200?text=%20";
 
-export default function PackBuilder({ catalog }: { catalog: Catalog }) {
+export default function PackBuilder({
+  catalog,
+  presets,
+}: {
+  catalog: Catalog;
+  presets: Presets;
+}) {
   const [picked, setPicked] = useState<Record<string, Pick>>({});
   const [limit, setLimit] = useState(LIMITS[1].grams);
   const [preview, setPreview] = useState<Product | null>(null);
@@ -74,6 +80,50 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
     });
     return { paisa, grams, units, lines: Object.keys(picked).length };
   }, [picked, allVariants]);
+
+  const presetState = (preset: Presets[number]) => {
+    const total = preset.items.length;
+    const applied = preset.items.filter(
+      (i) => picked[i.variant.productId]?.variantId === i.variantId,
+    ).length;
+    const cost = preset.items.reduce(
+      (s, i) => s + i.variant.pricePaisa * i.qty,
+      0,
+    );
+    const grams = preset.items.reduce(
+      (s, i) => s + i.variant.weightGrams * i.qty,
+      0,
+    );
+    return { total, applied, cost, grams, full: applied === total };
+  };
+
+  const togglePreset = (preset: Presets[number]) => {
+    const { full } = presetState(preset);
+    setPicked((prev) => {
+      const next = { ...prev };
+      if (full) {
+        preset.items.forEach((i) => {
+          if (next[i.variant.productId]?.variantId === i.variantId) {
+            delete next[i.variant.productId];
+          }
+        });
+      } else {
+        preset.items.forEach((i) => {
+          next[i.variant.productId] = { variantId: i.variantId, qty: i.qty };
+        });
+        // open the categories the preset touches
+        const cats = new Set(
+          preset.items.map((i) => i.variant.product.category.id),
+        );
+        setExpanded((e) => {
+          const ne = { ...e };
+          cats.forEach((c) => (ne[c] = true));
+          return ne;
+        });
+      }
+      return next;
+    });
+  };
 
   const toggle = (p: Product) =>
     setPicked((prev) => {
@@ -145,6 +195,20 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
             Pick what you need. We source it, you inspect it in Kathmandu before
             paying the balance.
           </Typography>
+
+          <Typography
+            component={Link}
+            href="/guide"
+            sx={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: "primary.main",
+              textDecoration: "none",
+              "&:hover": { textDecoration: "underline" },
+            }}
+          >
+            Groceries and documents? See what to buy yourself →
+          </Typography>
         </Stack>
 
         <Box
@@ -180,7 +244,123 @@ export default function PackBuilder({ catalog }: { catalog: Catalog }) {
             ))}
           </Stack>
         </Box>
+        {presets.length > 0 && (
+          <Box sx={{ mb: 5 }}>
+            <Typography
+              component="h2"
+              sx={{ fontWeight: 700, fontSize: 18, mb: 0.5 }}
+            >
+              Start with a set
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+              Adds everything at once. You can remove anything you don&apos;t
+              need afterwards.
+            </Typography>
 
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+              {presets.map((p) => {
+                const st = presetState(p);
+                const partial = st.applied > 0 && !st.full;
+
+                return (
+                  <Box
+                    key={p.id}
+                    onClick={() => togglePreset(p)}
+                    sx={{
+                      flex: 1,
+                      p: 2.5,
+                      borderRadius: 3,
+                      cursor: "pointer",
+                      border: "1.5px solid",
+                      borderColor: st.full ? "primary.main" : "#F0F1F3",
+                      bgcolor: st.full ? "rgba(0,167,111,0.04)" : "#fff",
+                      transition: "all .18s",
+                      "&:hover": {
+                        borderColor: st.full ? "primary.main" : "#DFE3E8",
+                        boxShadow:
+                          "0 1px 2px rgba(16,24,40,0.04), 0 12px 28px -12px rgba(16,24,40,0.14)",
+                      },
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={1.5}
+                      sx={{ alignItems: "flex-start", mb: 1 }}
+                    >
+                      <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+                        <Typography
+                          sx={{
+                            fontWeight: 700,
+                            fontSize: 16,
+                            lineHeight: 1.3,
+                          }}
+                        >
+                          {p.name}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontSize: 13,
+                            color: "text.secondary",
+                            mt: 0.25,
+                          }}
+                        >
+                          {st.total} items · {npr(st.cost)} · {kg(st.grams)}
+                        </Typography>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          width: 26,
+                          height: 26,
+                          borderRadius: 99,
+                          flexShrink: 0,
+                          display: "grid",
+                          placeItems: "center",
+                          bgcolor: st.full ? "primary.main" : "transparent",
+                          border: st.full ? "none" : "1.5px solid #DFE3E8",
+                          color: "#fff",
+                        }}
+                      >
+                        {st.full ? (
+                          <Check sx={{ fontSize: 16 }} />
+                        ) : (
+                          <Add sx={{ fontSize: 16, color: "#919EAB" }} />
+                        )}
+                      </Box>
+                    </Stack>
+
+                    {p.description && (
+                      <Typography
+                        sx={{
+                          fontSize: 13.5,
+                          color: "text.secondary",
+                          lineHeight: 1.55,
+                        }}
+                      >
+                        {p.description}
+                      </Typography>
+                    )}
+
+                    {partial && (
+                      <Chip
+                        size="small"
+                        label={`${st.applied} of ${st.total} selected — tap to add the rest`}
+                        sx={{
+                          mt: 1.5,
+                          height: 22,
+                          fontSize: 11.5,
+                          fontWeight: 600,
+                          bgcolor: "rgba(0,167,111,0.10)",
+                          color: "primary.dark",
+                        }}
+                      />
+                    )}
+                  </Box>
+                );
+              })}
+            </Stack>
+          </Box>
+        )}
         {catalog.map((cat, ci) => {
           const chosen = cat.products.filter((p) => picked[p.id]).length;
           const open = expanded[cat.id] ?? ci === 0;

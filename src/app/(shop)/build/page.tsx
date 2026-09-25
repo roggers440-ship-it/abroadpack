@@ -1,4 +1,4 @@
-import { getCatalog } from "@/lib/catalog";
+import { getCatalog, getPresets } from "@/lib/catalog";
 import PackBuilder from "@/components/PackBuilder";
 
 export const metadata = {
@@ -9,6 +9,6 @@ export const metadata = {
 };
 
 export default async function BuildPage() {
-  const catalog = await getCatalog();
-  return <PackBuilder catalog={catalog} />;
+  const [catalog, presets] = await Promise.all([getCatalog(), getPresets()]);
+  return <PackBuilder catalog={catalog} presets={presets} />;
 }

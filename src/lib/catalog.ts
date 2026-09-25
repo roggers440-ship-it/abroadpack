@@ -20,3 +20,22 @@ export async function getCatalog() {
 }
 
 export type Catalog = Awaited<ReturnType<typeof getCatalog>>;
+
+export async function getPresets() {
+  return prisma.preset.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      items: {
+        orderBy: { sortOrder: "asc" },
+        include: {
+          variant: {
+            include: { product: { include: { category: true } } },
+          },
+        },
+      },
+    },
+  });
+}
+
+export type Presets = Awaited<ReturnType<typeof getPresets>>;

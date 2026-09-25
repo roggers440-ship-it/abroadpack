@@ -69,6 +69,14 @@ export default function CategoryTable({ categories }: { categories: Row[] }) {
         <Button variant="contained" onClick={() => setOpen(true)}>
           Add category
         </Button>
+        <Stack direction="row" spacing={1}>
+          <Button component={Link} href="/admin/catalog/presets">
+            Sets
+          </Button>
+          <Button variant="contained" onClick={() => setOpen(true)}>
+            Add category
+          </Button>
+        </Stack>
       </Stack>
 
       {err && (

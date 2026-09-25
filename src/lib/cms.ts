@@ -34,3 +34,37 @@ export async function getProductForEdit(id: string) {
     },
   });
 }
+export async function listPresets() {
+  return prisma.preset.findMany({
+    orderBy: { sortOrder: "asc" },
+    include: { _count: { select: { items: true } } },
+  });
+}
+
+export async function getPresetForEdit(id: string) {
+  return prisma.preset.findUnique({
+    where: { id },
+    include: {
+      items: {
+        orderBy: { sortOrder: "asc" },
+        include: { variant: { include: { product: true } } },
+      },
+    },
+  });
+}
+
+export async function allVariantsForPicker() {
+  return prisma.category.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: "asc" },
+    include: {
+      products: {
+        where: { isActive: true },
+        orderBy: { sortOrder: "asc" },
+        include: {
+          variants: { where: { isActive: true }, orderBy: { pricePaisa: "desc" } },
+        },
+      },
+    },
+  });
+}

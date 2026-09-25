@@ -24,6 +24,7 @@ const PHONE_INTL = "+9779840953995";
 
 const NAV = [
   { label: "How it works", href: "/#how" },
+  { label: "Packing guide", href: "/guide" },
   { label: "Our office", href: "/#office" },
   { label: "My orders", href: "/find-order" },
 ];
