@@ -16,11 +16,19 @@ export default function Image() {
         background: "#fff",
       }}
     >
-      <div style={{ fontSize: 30, color: "#00A76F", fontWeight: 700 }}>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 30,
+          color: "#00A76F",
+          fontWeight: 700,
+        }}
+      >
         AbroadPack Nepal
       </div>
       <div
         style={{
+          display: "flex",
           fontSize: 64,
           fontWeight: 700,
           color: "#1C252E",
@@ -28,11 +36,16 @@ export default function Image() {
           lineHeight: 1.1,
         }}
       >
-        Everything you need
-        <br />
-        to take abroad.
+        Everything you need to take abroad.
       </div>
-      <div style={{ fontSize: 30, color: "#637381", marginTop: 28 }}>
+      <div
+        style={{
+          display: "flex",
+          fontSize: 30,
+          color: "#637381",
+          marginTop: 28,
+        }}
+      >
         One list. One visit. Pay only for what you keep.
       </div>
     </div>,
