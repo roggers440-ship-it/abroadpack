@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyCallback } from "@/lib/esewa";
+import { BASE_URL } from "@/lib/site";
 
 export async function GET(req: Request) {
   const encoded = new URL(req.url).searchParams.get("data");
-  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  const base = BASE_URL;
 
   if (!encoded) return NextResponse.redirect(`${base}/?error=missing_data`);
 

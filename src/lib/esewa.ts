@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { BASE_URL } from "@/lib/site";
 
 const SECRET = process.env.ESEWA_SECRET!;
 export const PRODUCT_CODE = process.env.ESEWA_PRODUCT_CODE!;
@@ -11,7 +12,7 @@ export function sign(message: string) {
 export function paymentFields(opts: { totalRupees: string; uuid: string }) {
   const signed = "total_amount,transaction_uuid,product_code";
   const message = `total_amount=${opts.totalRupees},transaction_uuid=${opts.uuid},product_code=${PRODUCT_CODE}`;
-  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  const base = BASE_URL;
 
   return {
     amount: opts.totalRupees,

@@ -1,12 +1,11 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Inter } from "next/font/google";
+import { BASE_URL } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(BASE_URL),
   title: {
     default:
       "AbroadPack Nepal — Packing list and supplies for students going abroad",

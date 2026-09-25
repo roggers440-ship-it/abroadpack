@@ -1,4 +1,6 @@
-const BASE = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+import { BASE_URL } from "@/lib/site";
+
+const BASE = BASE_URL;
 
 export default function JsonLd({ faqs }: { faqs: { q: string; a: string }[] }) {
   const data = [

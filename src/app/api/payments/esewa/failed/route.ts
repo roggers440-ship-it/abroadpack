@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
+import { BASE_URL } from "@/lib/site";
 
 export async function GET() {
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/?error=cancelled`);
+  return NextResponse.redirect(`${BASE_URL}/?error=cancelled`);
 }
